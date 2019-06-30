@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage, MenuController } from 'ionic-angular';
+import { CredenciaisDTO } from '../../models/credenciais.dto';
 
 
 @IonicPage()
@@ -9,6 +10,12 @@ import { NavController, IonicPage, MenuController } from 'ionic-angular';
 })
 export class HomePage {
 
+  credenciais: CredenciaisDTO = {
+    email: "",
+    senha: ""
+  }
+    
+  
   constructor(public navCtrl: NavController, public menu: MenuController) {
 
   }
@@ -17,6 +24,7 @@ export class HomePage {
     // Empilha uma tela sobre a outra - botão de voltar
     //this.navCtrl.push('CategoriasPage');
     // Coloca a classe independente
+    console.log(this.credenciais);
     this.navCtrl.setRoot('CategoriasPage');
   }
 
