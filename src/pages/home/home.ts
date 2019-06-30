@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage } from 'ionic-angular';
+import { NavController, IonicPage, MenuController } from 'ionic-angular';
 
 
 @IonicPage()
@@ -9,12 +9,23 @@ import { NavController, IonicPage } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public menu: MenuController) {
 
   }
 
   login(){
-    this.navCtrl.push('CategoriasPage');
+    // Empilha uma tela sobre a outra - botão de voltar
+    //this.navCtrl.push('CategoriasPage');
+    // Coloca a classe independente
+    this.navCtrl.setRoot('CategoriasPage');
+  }
+
+  ionViewWillEnter(){
+    this.menu.swipeEnable(false);
+  }
+
+  ionViewDidLeave(){
+    this.menu.swipeEnable(true);
   }
 
 }
