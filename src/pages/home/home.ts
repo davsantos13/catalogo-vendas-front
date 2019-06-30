@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage, MenuController } from 'ionic-angular';
 import { CredenciaisDTO } from '../../models/credenciais.dto';
+import { AuthService } from '../../services/auth.service';
 
 
 @IonicPage()
@@ -16,16 +17,22 @@ export class HomePage {
   }
     
   
-  constructor(public navCtrl: NavController, public menu: MenuController) {
+  constructor(public navCtrl: NavController, 
+              public menu: MenuController,
+              public auth: AuthService) {
 
   }
 
   login(){
     // Empilha uma tela sobre a outra - botão de voltar
     //this.navCtrl.push('CategoriasPage');
-    // Coloca a classe independente
-    console.log(this.credenciais);
-    this.navCtrl.setRoot('CategoriasPage');
+
+    this.auth.authenticate(this.credenciais)
+            .subscribe(response =>{
+              console.log(response.headers.get('Authorization'));
+              this.navCtrl.setRoot('CategoriasPage');
+            },
+            error => {})
   }
 
   ionViewWillEnter(){
