@@ -5,6 +5,7 @@ import { HttpClient } from "@angular/common/http";
 import { API_CONFIG } from "../config/api.config";
 import { StorageService } from "./storage.service";
 import { JwtHelper } from "angular2-jwt";
+import { ResponseType } from "@angular/http";
 
 @Injectable()
 export class AuthService {
@@ -22,6 +23,14 @@ export class AuthService {
                 observe: 'response',
                 responseType: 'text'
             })
+    }
+
+    refreshToken(){
+        return this.http.post(`${API_CONFIG.baseUrl}/auth/refresh_token`, {}, 
+        {
+            observe: 'response',
+            responseType: 'text'
+        })
     }
 
     successfulLogin(authorizationValue: string){
