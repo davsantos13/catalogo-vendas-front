@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @IonicPage()
 @Component({
@@ -8,9 +9,29 @@ import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angul
 })
 export class SignupPage {
 
+  formGroup: FormGroup;
+
   constructor(public navCtrl: NavController,
              public menu: MenuController,
-             public navParams: NavParams) {
+             public navParams: NavParams,
+             public formBuilder: FormBuilder) {
+
+              this.formGroup = this.formBuilder.group({
+                nome: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(120)]],
+                email: ['', [Validators.email]],
+                tipoCliente: ['', [Validators.required]],
+                idLegal: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(14)]],
+                senha: ['', [Validators.required]],
+                logradouro: ['', [Validators.required]],
+                numero: ['', []],
+                complemento: ['', []],
+                bairro: ['', [Validators.required]],
+                cep: ['', [Validators.required]],
+                telefone1: ['', []],
+                estadoId: ['', [Validators.required]],
+                cidadeId: ['', [Validators.required]]
+              });
+
   }
 
   signupUser(){
