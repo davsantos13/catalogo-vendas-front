@@ -37,11 +37,15 @@ export class HomePage {
             error => {});
   }
 
+  signUp(){
+    this.navCtrl.push('SignupPage');
+  }
+
   ionViewWillEnter(){
     this.menu.swipeEnable(false);
   }
 
-  ionViewDidLeave(){
+  ionViewWillLeave(){
     this.menu.swipeEnable(true);
   }
 
@@ -53,5 +57,7 @@ export class HomePage {
              },
              error => {});
   }
+
+  
 
 }

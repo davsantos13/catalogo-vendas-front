@@ -13,8 +13,8 @@
       <ion-input [(ngModel)] = "credenciais.senha" name = "senha" type="password"></ion-input>
     </ion-item>
     <div><br></div>
-    <button ion-button block (click) = "login()">Entrar</button>
+    <button ion-button block round (click) = "login()">Entrar</button>
   </form>
-    <button ion-button block outline>Registrar-se</button>
+    <button ion-button block round outline (click) = "signUp()">Registrar-se</button>
 
 </ion-content>
