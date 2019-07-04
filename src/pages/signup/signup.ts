@@ -30,19 +30,19 @@ export class SignupPage {
              public alertCtrl: AlertController) {
 
               this.formGroup = this.formBuilder.group({
-                nome: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(120)]],
-                email: ['', [Validators.email]],
-                tipoCliente: ['', [Validators.required]],
-                idLegal: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(14)]],
-                senha: ['', [Validators.required]],
-                logradouro: ['', [Validators.required]],
-                numero: ['', []],
-                complemento: ['', []],
-                bairro: ['', [Validators.required]],
-                cep: ['', [Validators.required]],
-                telefone1: ['', []],
-                estadoId: ['', [Validators.required]],
-                cidadeId: ['', [Validators.required]]
+                nome: ['Joaquim', [Validators.required, Validators.minLength(5), Validators.maxLength(120)]],
+                email: ['joaquim@gmail.com', [Validators.email]],
+                tipoCliente: ['1', [Validators.required]],
+                idLegal: ['06134596280', [Validators.required, Validators.minLength(11), Validators.maxLength(14)]],
+                senha: ['123', [Validators.required]],
+                logradouro: ['Rua Via', [Validators.required]],
+                numero: ['25', []],
+                complemento: ['Apto 3', []],
+                bairro: ['Copacabana', [Validators.required]],
+                cep: ['10828333', [Validators.required]],
+                telefone1: ['977261827', []],
+                estadoId: [null, [Validators.required]],
+                cidadeId: [null, [Validators.required]]
               });
 
   }
@@ -51,7 +51,7 @@ export class SignupPage {
     this.clienteService.insert(this.formGroup.value)
                        .subscribe(response => {
                          this.insertOk();
-                       });
+                       }, error => {});
   }
 
   insertOk(){
@@ -63,7 +63,7 @@ export class SignupPage {
         {
           text: 'OK',
           handler: () => {
-            this.navCtrl.pop();
+            this.navCtrl.setRoot('HomePage');
           }
         }
       ]
