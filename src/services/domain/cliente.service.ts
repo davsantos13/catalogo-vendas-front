@@ -21,4 +21,12 @@ export class ClienteService{
         let url = `${API_CONFIG.bucketBaseUrl}/cp${id}.jpg`
         return this.http.get(url, {responseType : 'blob'});
     }
+
+    insert (clienteDTO: ClienteDTO){
+       return this.http.post(`${API_CONFIG.baseUrl}/clientes`, 
+        clienteDTO, {
+            observe: 'response',
+            responseType: 'text'
+        });
+    }
 }
