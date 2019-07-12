@@ -14,47 +14,58 @@ export class ProdutosPage {
   items: ProdutoDTO[];
 
   constructor(public navCtrl: NavController,
-               public navParams: NavParams,
-               public produdoService: ProdutoService,
-               public loadingCtrl: LoadingController) {
+    public navParams: NavParams,
+    public produdoService: ProdutoService,
+    public loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
+    this.loadData();
+  }
+
+  loadData() {
     let categoriaId = this.navParams.get('cat');
     let loader = this.presentLoading();
     this.produdoService.findByCategoria(categoriaId)
-          .subscribe(response => {
-            this.items = response['content'];
-            loader.dismiss();
-            this.loadImageUrls();
-          }, 
-          error => {
-            loader.dismiss();
-          }
-          );
+      .subscribe(response => {
+        this.items = response['content'];
+        loader.dismiss();
+        this.loadImageUrls();
+      },
+        error => {
+          loader.dismiss();
+        }
+      );
   }
 
-  loadImageUrls(){
-    for(var i = 0; i < this.items.length; i++){
+  loadImageUrls() {
+    for (var i = 0; i < this.items.length; i++) {
       let item = this.items[i];
       this.produdoService.getSmallImageFromBucket(item.id)
-                .subscribe(response => {
-                    item.imageUrl = `${API_CONFIG.bucketBaseUrl}/prod${item.id}-small.jpg`
-                }, error => {});
+        .subscribe(response => {
+          item.imageUrl = `${API_CONFIG.bucketBaseUrl}/prod${item.id}-small.jpg`
+        }, error => { });
     }
   }
 
-  showDetail(produtoId: string){
-    this.navCtrl.push('ProdutodetailPage', {id: produtoId});
+  showDetail(produtoId: string) {
+    this.navCtrl.push('ProdutodetailPage', { id: produtoId });
   }
 
-  presentLoading(){
+  presentLoading() {
     let loader = this.loadingCtrl.create({
       content: "Aguarde..."
     });
 
     loader.present();
     return loader;
+  }
+
+  doRefresh(refresher) {
+    this.loadData();
+    setTimeout(() => {
+      refresher.complete();
+    }, 1000);
   }
 
 }
