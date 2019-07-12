@@ -11,13 +11,10 @@ export class PedidoService {
     }
 
     insert(pedido: PedidoDTO){
-        this.http.post(
-            `${API_CONFIG.baseUrl}/pedidos`,
-            pedido,
-            {
-                observe: 'response',
-                responseType: 'text'
-            }
-        );
+        return this.http.post(`${API_CONFIG.baseUrl}/pedidos`, pedido, 
+        {
+            observe: 'response',
+            responseType: 'text'
+        });
     }
 }
