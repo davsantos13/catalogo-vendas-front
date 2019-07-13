@@ -11,7 +11,9 @@ import { API_CONFIG } from '../../config/api.config';
 })
 export class ProdutosPage {
 
-  items: ProdutoDTO[];
+  //Iniciando lista de produtos vazia, para poder concatenarmos com as próximas páginas
+  items: ProdutoDTO[] = [];
+  page: number = 0;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -26,11 +28,14 @@ export class ProdutosPage {
   loadData() {
     let categoriaId = this.navParams.get('cat');
     let loader = this.presentLoading();
-    this.produdoService.findByCategoria(categoriaId)
+    this.produdoService.findByCategoria(categoriaId, this.page, 10)
       .subscribe(response => {
-        this.items = response['content'];
+        let start = this.items.length;
+        //concatenando os novos produtos com os que já estavam na lista
+        this.items = this.items.concat(response['content']);
+        let end = this.items.length;
         loader.dismiss();
-        this.loadImageUrls();
+        this.loadImageUrls(start, end);
       },
         error => {
           loader.dismiss();
@@ -38,8 +43,8 @@ export class ProdutosPage {
       );
   }
 
-  loadImageUrls() {
-    for (var i = 0; i < this.items.length; i++) {
+  loadImageUrls(start: number, end: number) {
+    for (var i = start; i < end; i++) {
       let item = this.items[i];
       this.produdoService.getSmallImageFromBucket(item.id)
         .subscribe(response => {
@@ -62,9 +67,21 @@ export class ProdutosPage {
   }
 
   doRefresh(refresher) {
+    this.page = 0;
+    this.items = [];
     this.loadData();
+    // Após 1 segundo, o refresher é desativado com o .complete()
     setTimeout(() => {
       refresher.complete();
+    }, 1000);
+  }
+
+  doInfinite(infiniteScroll){
+    this.page++;
+    this.loadData();
+
+    setTimeout(() => {
+      infiniteScroll.complete();
     }, 1000);
   }
 
