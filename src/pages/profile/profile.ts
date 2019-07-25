@@ -98,7 +98,8 @@ export class ProfilePage {
     this.clienteService.uploadPicture(this.picture)
       .subscribe(response => {
         this.picture = null;
-        this.getImageIfExist();
+        this.loadData();
+        this.getImageIfExist()
       },
       error => {
         this.cameraOn = false;
