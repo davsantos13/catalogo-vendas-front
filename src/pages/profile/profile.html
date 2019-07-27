@@ -22,9 +22,11 @@
       <img [src]="picture" >
     </ion-item>
     <ion-item>
-      <button ion-button round (click) = "getCameraPicture()" [disabled] = "cameraOn">Camera</button>
-      <button *ngIf="picture" ion-button round outline (click) = "sendPicture()">Enviar imagem</button>
-      <button *ngIf="picture" ion-button round outline (click) = "cancel()">Descartar</button>
+      <button ion-button block round (click) = "getCameraPicture()" [disabled] = "cameraOn">Camera</button>
+      <br>
+      <button *ngIf="picture" ion-button block round outline (click) = "sendPicture()">Enviar imagem</button>
+      <br>
+      <button *ngIf="picture" ion-button block round outline (click) = "cancel()">Descartar</button>
     </ion-item>
   </ion-card>
 </ion-content>
